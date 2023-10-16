@@ -1,0 +1,30 @@
+﻿@page "/"
+@using System.Text.Json;
+@using Fido2NetLib;
+@using System.Text.Json.Serialization.Metadata;
+
+<PageTitle>Webauthn Recreate Issue</PageTitle>
+
+
+<button class="btn btn-primary" @onclick="test">Click me to recreate</button>
+
+<div>@exception</div>
+
+@code {    
+    private readonly JsonSerializerOptions _jsonOptions = new FidoBlazorSerializerContext().Options;
+    string jsonData = "{\"rp\":{\"id\":\"test.azurewebsites.net\",\"name\":\"WebAuthn\",\"icon\":\"https://test.azurewebsites.net/\"},\"user\":{\"name\":\"driver@driver.com\",\"id\":\"ZHJpdmVyQGRyaXZlci5jb20\",\"displayName\":\"driver@driver.com\"},\"challenge\":\"QHcEA7xeJRx3_SZV4uoFQQ\",\"pubKeyCredParams\":[{\"type\":\"public-key\",\"alg\":-7},{\"type\":\"public-key\",\"alg\":-257},{\"type\":\"public-key\",\"alg\":-37},{\"type\":\"public-key\",\"alg\":-35},{\"type\":\"public-key\",\"alg\":-258},{\"type\":\"public-key\",\"alg\":-38},{\"type\":\"public-key\",\"alg\":-36},{\"type\":\"public-key\",\"alg\":-259},{\"type\":\"public-key\",\"alg\":-39},{\"type\":\"public-key\",\"alg\":-8}],\"timeout\":60000,\"attestation\":\"direct\",\"authenticatorSelection\":{\"authenticatorAttachment\":\"platform\",\"requireResidentKey\":true,\"userVerification\":\"required\"},\"excludeCredentials\":[],\"extensions\":{\"uvm\":true},\"status\":\"ok\",\"errorMessage\":\"\"}";
+    string exception = string.Empty;
+
+    private void test()
+    {
+        try
+        {
+            var deviceResponse = JsonSerializer.Deserialize(jsonData, typeof(CredentialCreateOptions), _jsonOptions);
+            exception = $"worked as expected {JsonSerializer.Serialize(deviceResponse)}";
+        }
+        catch (Exception ex)
+        {
+            exception = $"failure {ex.ToString()} | {jsonData}";
+        }       
+    }
+}
