@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>Fido2NetLib</RootNamespace>
+    <IsTrimmable>true</IsTrimmable>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="IMetadataService.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="6.0.8" />
+  </ItemGroup>
+</Project>
